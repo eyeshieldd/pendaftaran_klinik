@@ -13,7 +13,7 @@
             allowClear: true
         });
         /* Set DataTable */
-        dtcontoh = $("#tcontoh").DataTable({
+        dtdokter = $("#tdokter").DataTable({
             "ajax": {
                 "url": "<?=base_url('dokter/get_list_dokter');?>",
                 "type": "POST"
@@ -26,10 +26,9 @@
                 {"data": "no"},
                 {"data": "nama_dokter"},
                 {"data": "jadwal_periksa"},
-                {"data": "harga", "className" : "text-right"},
-                {"data": "tanggal_beli"},
-                {"data": "status"},
+                {"data": "jadwal_jam"},
                 {"data": "aksi"}
+           
             ]
         });
 

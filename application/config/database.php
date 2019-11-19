@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '172.16.100.6:3307',
-	'username' => 'circlelabs',
-	'password' => 'rahasiaadmincirclelabs',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'clcore-ampleadmin',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
