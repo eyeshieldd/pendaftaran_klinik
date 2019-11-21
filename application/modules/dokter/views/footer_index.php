@@ -107,13 +107,13 @@
         })
 
         // tombol ubah
-        $('#tcontoh').on('click', '.ubah-data', function () {
+        $('#tdokter').on('click', '.ubah-data', function () {
             /* var modal dan form */
             var modal = '#modal-ubah';
             var form = '#form-ubah';
             var data_id = $(this).attr('data-id');
             $.ajax({
-                url: "<?= base_url('contoh_satu/get_detail_data') ?>",
+                url: "<?= base_url('dokter/get_detail_data') ?>",
                 type: "POST",
                 data: "data_id=" + data_id,
                 timeout: 5000,
@@ -132,56 +132,46 @@
 
                         $(modal).modal('show');
                     } else {
-                        notif.error(data.pesan,'Gagal');
+                        toastr.error(data.pesan,'Gagal');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                 alertajax.error(textStatus, jqXHR.status);
+                 toastr.error(textStatus, jqXHR.status);
              }
          })
         });
 
         // tombol ubah
-        $('#tdokter').on('click', '.hapus-data', function () {
 
+
+        $('#tdokter').on('click', '.hapus-data', function () {
             /* var modal dan form */
-            var data_id = $(this).attr('data-id');
-            $.confirm({
-                title: 'Hapus data?',
-                content: 'Apakah Anda yakin akan menghapus data ini?',
-                type:'red',
-                buttons: {
-                    ya: {
-                        btnClass: 'btn-red',
-                        action:function () {
-                            $.ajax({
-                                type: 'post',
-                                url: '<?php echo base_url('dokter/proses_hapus_data'); ?>',
-                                data: 'data_id=' + data_id,
-                                dataType: 'JSON',
-                                timeout: 5000,
-                                success: function (data) {
-                                    if (data.status) {
-                                        toastr.success(data.pesan, "Berhasil");
-                                        $(modal).modal('hide');
-                                        dtdokter.ajax.reload(null, false);
-                                    } else {
-                                        toastr.error(data.pesan, "Gagal");
-                                        dtdokter.ajax.reload(null, false);
-                                    }
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    dtdokter.ajax.reload(null, false);
-                                    alertajax.error(textStatus, jqXHR.status);
+            // var hula = $("#dokter").DataTable();
+            var id_dokter = $(this).attr('data-id');
+            bootbox.confirm('Apakah Anda yakin akan menghapus data ini?', function (konfirm) {
+                if (konfirm) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?php echo base_url('dokter/proses_hapus_data'); ?>',
+                        data: 'id_dokter=' + id_dokter,
+                        dataType: 'JSON',
+                        timeout: 5000,
+                        success: function (data) {
+                            if (data.status) {
+                                toastr.success(data.pesan, "Berhasil");
+                                dtdokter.ajax.reload(null, false);                            } else {
+                                    toastr.error(data.pesan, "Eror");
                                 }
-                            });
-                        }
-                    },
-                    batal:function(){}
+                            },
+                            error: function () {
+                                dtconfig.ajax.reload(null, false);
+                                alertajax.error('Terjadi kesalahan saat menghubungkan ke server.');
+                            }
+                        });
                 }
             });
-        });
+        })
 
         $('#modal-tambah').on('hidden.bs.modal', function(e) {
             $(this).find('#form-tambah')[0].reset();

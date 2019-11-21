@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">
         <link rel="stylesheet" id="css-main" href="<?=base_url('assets/operator/css/codebase.min.css')?>">
         <link rel="stylesheet" id="css-main" href="<?=base_url('assets/operator/js/plugins/toast-master/css/jquery.toast.css')?>">
+
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="<?=base_url('assets/operator/js/plugins/datatables/dataTables.bootstrap4.css')?>">
         <?php echo isset($FILE_CSS) && !empty($FILE_CSS) ? $FILE_CSS : ''; ?>
@@ -251,6 +252,7 @@
         <!-- Page JS Plugins -->
         <script src="<?=base_url('assets/operator/js/plugins/datatables/jquery.dataTables.min.js')?>"></script>
         <script src="<?=base_url('assets/operator/js/plugins/datatables/dataTables.bootstrap4.min.js')?>"></script>
+        <script src="<?=base_url('assets/global/bootbox/bootbox.min.js')?>"></script>
         <script type="text/javascript">
 
                     $(document).ajaxComplete(

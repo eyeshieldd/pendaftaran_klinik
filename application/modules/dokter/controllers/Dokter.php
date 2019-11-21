@@ -52,7 +52,7 @@ class Dokter extends Portal
 
         // tombol
         $tombol = '<div class="text-center">
-        <button type="button" class="btn btn-success mr-5 mb-5  ubah-data" data-id="{{id_dokter}}"><i class="fa fa-pencil"></i> </button>
+        <button type="button" class="btn btn-success mr-5 mb-5 ubah-data" data-id="{{id_dokter}}"><i class="fa fa-pencil"></i> </button>
         <button type="button" class="btn btn-danger mr-5 mb-5 hapus-data" data-id="{{id_dokter}}"><i class="fa fa-trash"></i> </button>
         </div>';
 
@@ -92,17 +92,17 @@ class Dokter extends Portal
         // library uuid
         $this->load->library('uuid');
 
-        $data_simpan['id_dokter']           = $this->uuid->v4(true);
-        $data_simpan['nama_dokter']          = $this->input->post('nama_dokter', true);
+        $data_simpan['id_dokter']          = $this->uuid->v4(true);
+        $data_simpan['nama_dokter']        = $this->input->post('nama_dokter', true);
         $data_simpan['jadwal_periksa']     = $this->input->post('jadwal_periksa', true);
-        $data_simpan['jadwal_jam']        = $this->input->post('jadwal_jam', true);
-        $data_simpan['nama_klinik']         = $this->input->post('nama_klinik', true);
+        $data_simpan['jadwal_jam']         = $this->input->post('jadwal_jam', true);
+        $data_simpan['nama_klinik']        = $this->input->post('nama_klinik', true);
 
         if ($this->m_dokter->tambah_data('dokter', $data_simpan)) {
             $result['status'] = true;
             $result['pesan']  = 'Data berhasil disimpan.';
         } else {
-            $eror             = $this->m_pl_kejuruan->get_db_error();
+            $eror             = $this->tambah_data->get_db_error();
             $result['status'] = false;
             $result['pesan']  = 'Data gagal disimpan. Eror kode : ' . $eror['code'];
         }
@@ -121,7 +121,7 @@ class Dokter extends Portal
             show_404();
         }
         // get data
-        $data['data'] = $this->m_contoh_satu->get_detail_data($this->input->post('data_id'));
+        $data['data'] = $this->m_dokter->get_detail_data($this->input->post('data_id'));
         // validasi jika kosong
         if (empty($data)) {
             return $this->output->set_output(json_encode(array('pesan' => 'data tidak ditemukan!', 'data' => null)));

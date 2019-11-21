@@ -13,10 +13,7 @@ class M_dokter extends M_model_base
 
     public function get_detail_data($par)
     {
-        $sql = 'SELECT id_dokter, nama_dokter, kategori, harga, tanggal_beli, ct.status, ct.mdd, u.username
-				FROM dokter ct
-				LEFT JOIN sys_user u ON u.user_id = ct.mdb 
-				WHERE id = ?';
+        $sql = 'SELECT * FROM dokter';
 
         $query = $this->db->query($sql, $par);
         if ($query->num_rows() > 0) {
