@@ -11,10 +11,10 @@ class Dokter extends Portal
 {
 
     public $form_conf = array(
-        array('field' => 'nama_dokter', 'label' => 'Nama Barang', 'rules' => 'required|max_length[255]'),
-        array('field' => 'jadwal_periksa', 'label' => 'Kategori', 'rules' => 'required|max_length[255]'),
-        array('field' => 'jadwal_jam', 'label' => 'Harga', 'rules' => 'required|max_length[255]'),
-        // array('field' => 'status', 'label' => 'Status', 'rules' => 'required'),
+        array('field' => 'nama_dokter', 'label' => 'Nama Dokter', 'rules' => 'required|max_length[255]'),
+        array('field' => 'jadwal_periksa', 'label' => 'Jadwal Periksa', 'rules' => 'required|max_length[255]'),
+        array('field' => 'jadwal_jam', 'label' => 'Jadwal Jam', 'rules' => 'required|max_length[255]'),
+        array('field' => 'nama_klinik', 'label' => 'Spesialis', 'rules' => 'required'),
     );
 
     public function __construct()
@@ -31,9 +31,13 @@ class Dokter extends Portal
         $this->load_js('assets/operator/js/plugins/select2/js/select2.full.min.js');
         $this->load_css('assets/operator/js/plugins/select2/css/select2.min.css');
 
+
+        $this->load_css('assets/global/toastr/toastr.min.css');
+        $this->load_js('assets/global/toastr/toastr.min.js');
+
         // load jquery validator
-        // $this->load_css('assets/global/jquery-form-validator-net/form-validator/theme-default.min.css');
-        // $this->load_js('assets/global/jquery-form-validator-net/form-validator/jquery.form-validator.min.js');
+        $this->load_css('assets/global/jquery-form-validator-net/form-validator/theme-default.min.css');
+        $this->load_js('assets/global/jquery-form-validator-net/form-validator/jquery.form-validator.min.js');
 
         parent::display('index', null, 'footer_index');
     }
@@ -57,13 +61,13 @@ class Dokter extends Portal
 
         return $this->output->set_output(
             $this->cldatatable->set_tabel('dokter')
-            ->set_kolom('id_dokter, nama_dokter, id_poli, jadwal_periksa, jadwal_jam')       
+            ->set_kolom('id_dokter, nama_dokter, jadwal_periksa, jadwal_jam, nama_klinik')       
             ->tambah_kolom('aksi', $tombol)
             ->get_datatable()
         );
     }
 
-    public function proses_tambah_data()
+    public function proses_tambah_dokter()
     {
         // set permission
         $this->_set_page_role('c');
@@ -88,18 +92,13 @@ class Dokter extends Portal
         // library uuid
         $this->load->library('uuid');
 
-        $data_simpan['id']           = $this->uuid->v4(true);
-        $data_simpan['nama_barang']  = $this->input->post('nama_barang', true);
-        $data_simpan['kategori']     = $this->input->post('kategori', true);
-        $data_simpan['harga']        = $this->input->post('harga', true);
-        $data_simpan['tanggal_beli'] = $this->input->post('tanggal_beli', true);
-        $data_simpan['status']       = $this->input->post('status', true);
-        $data_simpan['ctb']          = $this->com_user['user_id'];
-        $data_simpan['ctd']          = date('Y-m-d H:i:s');
-        $data_simpan['mdb']          = $this->com_user['user_id'];
-        $data_simpan['mdd']          = date('Y-m-d H:i:s');
+        $data_simpan['id_dokter']           = $this->uuid->v4(true);
+        $data_simpan['nama_dokter']          = $this->input->post('nama_dokter', true);
+        $data_simpan['jadwal_periksa']     = $this->input->post('jadwal_periksa', true);
+        $data_simpan['jadwal_jam']        = $this->input->post('jadwal_jam', true);
+        $data_simpan['nama_klinik']         = $this->input->post('nama_klinik', true);
 
-        if ($this->m_contoh_satu->tambah_data('contoh_tabel', $data_simpan)) {
+        if ($this->m_dokter->tambah_data('dokter', $data_simpan)) {
             $result['status'] = true;
             $result['pesan']  = 'Data berhasil disimpan.';
         } else {
@@ -185,12 +184,12 @@ class Dokter extends Portal
         }
 
         // parameter
-        $hapus['id'] = $this->input->post('data_id');
-        if ($this->m_contoh_satu->hapus_data('contoh_tabel', $hapus)) {
+        $hapus['id_dokter'] = $this->input->post('id_dokter');
+        if ($this->m_dokter->hapus_data('dokter', $hapus)) {
             $result['status'] = true;
             $result['pesan']  = 'Data berhasil dihapus.';
         } else {
-            $eror             = $this->m_contoh_satu->get_db_error();
+            $eror             = $this->m_dokter->get_db_error();
             $result['status'] = false;
             $result['pesan']  = 'Data gagal dihapus. Eror kode : ' . $eror['code'];
         }

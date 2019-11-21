@@ -6,10 +6,10 @@
                     <div class="row">
                         <div class="col-md-10">
                             <form class="form-inline" action="" method="post" onsubmit="return false;">
-                                <label class="sr-only" for="example-if-email">Nama Barang</label>
-                                <input type="email" class="form-control form-control-lg mb-2 mr-sm-2 mb-sm-0" id="example-if-email" name="nama_barang" placeholder="Nama Barang">
-                                <label class="sr-only" for="example-if-password">Kategori</label>
-                                <input type="password" class="form-control form-control-lg mb-2 mr-sm-2 mb-sm-0" id="example-if-password" name="kategori" placeholder="Kategori">
+                                <label class="sr-only" for="example-if-email">Nama Dokter</label>
+                                <input type="email" class="form-control form-control-lg mb-2 mr-sm-2 mb-sm-0" id="example-if-email" name="nama_barang" placeholder="Nama Dokter">
+                                <label class="sr-only" for="example-if-password">Spesialis</label>
+                                <input type="password" class="form-control form-control-lg mb-2 mr-sm-2 mb-sm-0" id="example-if-password" name="kategori" placeholder="Spesialis">
                                 <button type="submit" class="btn btn-primary btn-lg">Cari</button>
                             </form>
                         </div>
@@ -27,6 +27,7 @@
                                         <th>Nama Dokter</th>
                                         <th>Jadwal Periksa</th>
                                         <th>Jadwal Jam</th>
+                                        <th>spesialis</th>
                                         <th>Aksi</th>
                                      
                                  
@@ -48,7 +49,7 @@
         <div class="modal-content">
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
-                    <h3 class="block-title">Tambah Data</h3>
+                    <h3 class="block-title">Tambah Data Dokter</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="si si-close"></i>
@@ -62,7 +63,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" id="tombol-submit" class="btn btn-primary">
+                    <button type="button" id="tombol-simpan" class="btn btn-primary" >
                         <i class="fa fa-save"></i> Save
                     </button>
                 </div>

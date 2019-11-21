@@ -1,49 +1,50 @@
 <script>
-   jQuery(function(){ 
-        Codebase.helpers(['datepicker','select2']); 
-    });
-   jQuery(document).ready(function() {
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-        var responsiveHelper_dt_basic = [];
+ jQuery(function(){ 
+    Codebase.helpers(['datepicker','select2']); 
+});
+ jQuery(document).ready(function() {
+    var breakpointDefinition = {
+        tablet: 1024,
+        phone: 480
+    };
+    var responsiveHelper_dt_basic = [];
 
-        $(".select2").select2({
-            allowClear: true
-        });
-        /* Set DataTable */
-        dtdokter = $("#tdokter").DataTable({
-            "ajax": {
-                "url": "<?=base_url('dokter/get_list_dokter');?>",
-                "type": "POST"
-            },
+    $(".select2").select2({
+        allowClear: true
+    });
+    /* Set DataTable */
+    dtdokter = $("#tdokter").DataTable({
+        "ajax": {
+            "url": "<?=base_url('dokter/get_list_dokter');?>",
+            "type": "POST"
+        },
             // "sDom": dom_footer,
             "serverSide": true,
             "bFilter": false,
             "paging": true,
             "columns": [
-                {"data": "no"},
-                {"data": "nama_dokter"},
-                {"data": "jadwal_periksa"},
-                {"data": "jadwal_jam"},
-                {"data": "aksi"}
-           
+            {"data": "no"},
+            {"data": "nama_dokter"},
+            {"data": "jadwal_periksa"},
+            {"data": "jadwal_jam"},
+            {"data": "nama_klinik"},
+            {"data": "aksi"}
+
             ]
         });
 
         // tombol simpan
         $('#tombol-simpan').click(function (){
-            var modal = '#modal-add';
+            var modal = '#modal-tambah';
             var form = '#form-tambah';
 
-            if (!$(form).isValid()) {
-                $(form + ' #tombol-submit').attr('disabled', false);
-                return;
-            }
+            // if (!$(form).isValid()) {
+            //     $(form + ' #tombol-simpan').attr('disabled', false);
+            //     return;
+            // }
 
             $.ajax({
-                url: "<?php echo base_url('contoh_satu/proses_tambah_data') ?>",
+                url: "<?php echo base_url('dokter/proses_tambah_dokter') ?>",
                 type: "POST",
                 data: $(form).serialize(),
                 timeout: 5000,
@@ -52,21 +53,22 @@
                 {
                     if (data.status)
                     {
-                        notif.success(data.pesan, "Berhasil");
-                        $(modal).modal('hide');
+                        toastr.success(data.pesan, "Berhasil");
                         $(form)[0].reset();
-                        dtcontoh.ajax.reload(null, false);
+                        $(modal).modal('hide');
+                        dtdokter.ajax.reload(null, false);
                     } else {
-                        notif.error(data.pesan,'Gagal');
+                        toastr.error(data.pesan,'Gagal');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
                   alertajax.error(textStatus, jqXHR.status);
-                }
-            });
+              }
+          });
             $(form + ' #tombol-submit').attr('disabled', false);
         })
+
 
         // tombol simpan
         $('#tombol-ubah').click(function (){
@@ -135,13 +137,13 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                       alertajax.error(textStatus, jqXHR.status);
-                }
-            })
+                 alertajax.error(textStatus, jqXHR.status);
+             }
+         })
         });
 
         // tombol ubah
-        $('#tcontoh').on('click', '.hapus-data', function () {
+        $('#tdokter').on('click', '.hapus-data', function () {
 
             /* var modal dan form */
             var data_id = $(this).attr('data-id');
@@ -155,21 +157,22 @@
                         action:function () {
                             $.ajax({
                                 type: 'post',
-                                url: '<?php echo base_url('contoh_satu/proses_hapus_data'); ?>',
+                                url: '<?php echo base_url('dokter/proses_hapus_data'); ?>',
                                 data: 'data_id=' + data_id,
                                 dataType: 'JSON',
                                 timeout: 5000,
                                 success: function (data) {
                                     if (data.status) {
-                                        notif.success(data.pesan, "Berhasil");
-                                        dtcontoh.ajax.reload(null, false);
+                                        toastr.success(data.pesan, "Berhasil");
+                                        $(modal).modal('hide');
+                                        dtdokter.ajax.reload(null, false);
                                     } else {
-                                        notif.error(data.pesan, "Gagal");
-                                        dtcontoh.ajax.reload(null, false);
+                                        toastr.error(data.pesan, "Gagal");
+                                        dtdokter.ajax.reload(null, false);
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
-                                    dtcontoh.ajax.reload(null, false);
+                                    dtdokter.ajax.reload(null, false);
                                     alertajax.error(textStatus, jqXHR.status);
                                 }
                             });
@@ -192,5 +195,5 @@
           //   lang: 'id'
           // });
 
-    })
-</script>
+      })
+  </script>
